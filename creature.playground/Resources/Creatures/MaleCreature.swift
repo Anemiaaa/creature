@@ -9,6 +9,7 @@ import Foundation
 
 class MaleCreature: Creature, ChildrenTrackProtocol {
     
+    // MARK: -
     // MARK: Variables
     
     public let name: String
@@ -16,23 +17,25 @@ class MaleCreature: Creature, ChildrenTrackProtocol {
     public let age: Int
     public let sex = Sex.male
     
-    internal var children: [Creature] = []
+    var children: [Creature] = []
     
+    // MARK: -
     // MARK: Initialization
     
-    init(_ name: String, _ weight: Float, _ age: Int) {
+    init(name: String, weight: Float, age: Int) {
         self.name = name
         self.weight = weight
         self.age = age
         
-        sayHello()
+        self.sayHello()
     }
     
+    // MARK: -
     // MARK: Public
     
     /// Realization of the Creature protocol function
     public func action() {
-        fight()
+        self.fight()
     }
     
     // MARK: Private

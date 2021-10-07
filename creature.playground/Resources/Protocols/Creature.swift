@@ -1,5 +1,5 @@
 //
-//  Helpers.swift
+//  Creature.swift
 //  creatureProject
 //
 //  Created by IOS on 05.10.2021.
@@ -7,10 +7,37 @@
 
 import Foundation
 
-class Helper {
-    /// Returns a randomly generetad instance of the Creature class
-    /// - Returns: instance of the Creature class
-    static func getRandomCreature() -> Creature {
+enum Sex {
+    case male
+    case female
+    case nonBinary
+}
+
+protocol Creature: AnyClass {
+    
+    var name: String { get }
+    var weight: Float { get }
+    var age: Int { get }
+    var sex: Sex { get }
+    var children: [Creature] { get set }
+    
+    func action()
+    
+    func sayHello()
+    
+    static func random() -> Creature
+}
+
+extension Creature {
+    func sayHello() {
+        print("Hello! I'm " + self.name)
+        
+        self.children.forEach({
+            $0.sayHello()
+        })
+    }
+    	
+    static func random() -> Creature {
         let name = "Random Creature " + String(Int.random(in: 1...100))
         let weight = Float.random(in: 1...100)
         let age = Int.random(in: 1...100)
@@ -31,3 +58,4 @@ class Helper {
         return child
     }
 }
+
