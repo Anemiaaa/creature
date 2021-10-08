@@ -22,10 +22,9 @@ public protocol Creature: AnyObject {
     var children: [Creature] { get set }
     
     func action()
-    
     func sayHello()
     
-    static func random(male: Bool, female: Bool, nonBinary: Bool) -> Creature 
+    static func random() -> Creature
 }
 
 extension Creature {
@@ -36,31 +35,42 @@ extension Creature {
             $0.sayHello()
         })
     }
-    	
-    public static func random(male: Bool = true, female: Bool = true, nonBinary: Bool = true) -> Creature {
+    
+    public static func random() -> Creature {
+        [FemaleCreature.person(), MaleCreature.person(), NonBinary.person()].randomElement()!
+    }
+    
+    internal static func random<CreatureType: Creature>(
+        namePrefix: String,
+        initialization: (String, Float, Int) -> CreatureType
+    )
+        -> CreatureType
+    {
         let numberForName = String(Int.random(in: 1...100))
         let weight = Float.random(in: 1...100)
         let age = Int.random(in: 1...100)
-        var neededGenders: [Sex] = []
         
-        if female == true { neededGenders.append(Sex.female) }
-        if male == true { neededGenders.append(Sex.male) }
-        if nonBinary == true { neededGenders.append(Sex.nonBinary) }
-        
-        let sex = neededGenders[Int.random(in: 0 ..< neededGenders.count)]
-        
-        if sex == Sex.female {
-            return FemaleCreature(name: "Random female " + numberForName, weight: weight, age: age)
-        }
-        else if sex == Sex.male {
-            return MaleCreature(name: "Random male " + numberForName, weight: weight, age: age)
-        }
-        else {
-            return NonBinary(name: "Random nonBinary " + numberForName, weight: weight, age: age)
-        }
+        return initialization(namePrefix + " " + numberForName, weight, age)
     }
 }
 
-public protocol ChildBirthing {
+public protocol ChildBirthing: AnyObject {
+    
     var delegate: ChildrenBirthDelegate? { get set }
+    
+    static func randomChildBirthing() -> ChildBirthing
+    
+ //   static func register (registrator: ChildrenBirthDelegate)
+}
+
+extension ChildBirthing {
+
+    static public func randomChildBirthing() -> ChildBirthing {
+        [FemaleCreature.person(), NonBinary.person()].randomElement()!
+    }
+    
+    public func register(registrator: ChildrenBirthDelegate) -> Self {
+        self.delegate = registrator
+        return self
+    }
 }

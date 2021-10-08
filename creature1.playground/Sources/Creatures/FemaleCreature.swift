@@ -8,7 +8,7 @@
 import Foundation
 
 public class FemaleCreature: Creature, ChildBirthing {
-    
+
     // MARK: -
     // MARK: Variables
     
@@ -29,6 +29,13 @@ public class FemaleCreature: Creature, ChildBirthing {
         self.name = name
         self.weight = weight
         self.age = age
+    }
+    
+    // MARK: -
+    // MARK: Static
+    
+    public static func person() -> FemaleCreature {
+        random(namePrefix: "Random Female", initialization: FemaleCreature.init)
     }
     
     // MARK: -

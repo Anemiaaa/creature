@@ -29,6 +29,13 @@ public class MaleCreature: Creature {
     }
     
     // MARK: -
+    // MARK: Static
+    
+    public static func person() -> MaleCreature {
+        random(namePrefix: "Random Male", initialization: MaleCreature.init)
+    }
+    
+    // MARK: -
     // MARK: Public
     
     /// Realization of the Creature protocol function

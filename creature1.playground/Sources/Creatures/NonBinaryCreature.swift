@@ -32,6 +32,13 @@ public class NonBinary: Creature, ChildBirthing {
     }
     
     // MARK: -
+    // MARK: Static
+    
+    public static func person() -> NonBinary {
+        random(namePrefix: "Random nonBinary", initialization: NonBinary.init)
+    }
+    
+    // MARK: -
     // MARK: Public
     
     /// Realization of the Creature protocol function
