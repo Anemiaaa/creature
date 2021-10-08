@@ -59,8 +59,6 @@ public protocol ChildBirthing: AnyObject {
     var delegate: ChildrenBirthDelegate? { get set }
     
     static func randomChildBirthing() -> ChildBirthing
-    
- //   static func register (registrator: ChildrenBirthDelegate)
 }
 
 extension ChildBirthing {
@@ -68,9 +66,9 @@ extension ChildBirthing {
     static public func randomChildBirthing() -> ChildBirthing {
         [FemaleCreature.person(), NonBinary.person()].randomElement()!
     }
-    
-    public func register(registrator: ChildrenBirthDelegate) -> Self {
-        self.delegate = registrator
-        return self
-    }
+//
+//    public func register(registrator: ChildrenBirthDelegate) -> Self {
+//        self.delegate = registrator
+//        return self
+//    }
 }
