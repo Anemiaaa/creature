@@ -8,26 +8,38 @@
 import Foundation
 
 public enum Sex {
+    
     case male
     case female
     case nonBinary
 }
 
-public protocol Creature: AnyObject {
+public class Creature {
     
-    var name: String { get }
-    var weight: Float { get }
-    var age: Int { get }
-    var sex: Sex { get }
-    var children: [Creature] { get set }
+    // MARK: -
+    // MARK: Variables
     
-    func action()
-    func sayHello()
+    var name: String
+    var weight: Float
+    var age: Int
+    var children: [Creature] = []
     
-    static func random() -> Creature
-}
-
-extension Creature {
+    // MARK: -
+    // MARK: Initialization
+    
+    init(name: String, weight: Float, age: Int) {
+        self.name = name
+        self.weight = weight
+        self.age = age
+    }
+    
+    // MARK: -
+    // MARK: Public
+    
+    public func action() {
+        fatalError("override action function")
+    }
+    
     public func sayHello() {
         print("Hello! I'm " + self.name)
         
@@ -36,9 +48,16 @@ extension Creature {
         })
     }
     
-    public static func random() -> Creature {
-        [FemaleCreature.person(), MaleCreature.person(), NonBinary.person()].randomElement()!
+    public func add(child: Creature) {
+        self.children.append(child)
     }
+    
+    public class func random() -> Creature {
+        [FemaleCreature.random(), MaleCreature.random(), NonBinary.random()].randomElement()!
+    }
+    
+    // MARK: -
+    // MARK: Internal
     
     internal static func random<CreatureType: Creature>(
         namePrefix: String,
@@ -57,18 +76,4 @@ extension Creature {
 public protocol ChildBirthing: AnyObject {
     
     var delegate: ChildrenBirthDelegate? { get set }
-    
-    static func randomChildBirthing() -> ChildBirthing
-}
-
-extension ChildBirthing {
-
-    static public func randomChildBirthing() -> ChildBirthing {
-        [FemaleCreature.person(), NonBinary.person()].randomElement()!
-    }
-//
-//    public func register(registrator: ChildrenBirthDelegate) -> Self {
-//        self.delegate = registrator
-//        return self
-//    }
 }
